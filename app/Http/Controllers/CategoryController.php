@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -11,7 +12,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('product.category.index');
+        return view('category.index');
     }
 
     /**
@@ -19,7 +20,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.index');
     }
 
     /**
@@ -35,13 +36,13 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+       //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
         //
     }
