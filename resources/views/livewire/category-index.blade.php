@@ -1,5 +1,6 @@
 <div>
     <form wire:submit.prevent="formSubmit">
+        @csrf
         <label for="classification">Select Classification:</label>
         <select wire:model="classification">
             <option selected>Select</option>
@@ -15,22 +16,22 @@
             'required' => 'required',
         ])
 
-        <button type="submit">Add</button>
+        <button type="submit" class="p-3 bg-gray-300 border rounded">Add</button>
             
         
     </form>
 
-    <table class="w-full table-auto">
+    <table class="w-full table-auto mt-10">
         <tr>
-            <th class="border px-4 py-2 text-center">Id</th>
+            <th class="border px-4 py-2 text-center">Serial</th>
             <th class="border px-4 py-2 text-center">Classification</th>
             <th class="border px-4 py-2 text-center">Category Name</th>
             <th class="border px-4 py-2">Actions</th>
         </tr>
-
+        
         @foreach($categories as $category)
             <tr>
-                <td class="border px-4 py-2">{{ $category->id }}</td>
+                <td class="border px-4 py-2">{{ $loop->iteration }}</td>
                 <td class="border px-4 py-2">
                     @if($editMode && $selectedCategoryId === $category->id)
                         <select wire:model="classification">
@@ -58,7 +59,7 @@
                                 @include('components.icons.edit')
                             </a>
 
-                            <form onsubmit="return confirm('Are you sure?');" wire:submit.prevent="categoryDelete({{ $category->id }})">
+                            <form onsubmit="return confirm('Are you sure?')" wire:submit.prevent="categoryDelete({{ $category->id }})">
                                 <button type="submit">
                                     @include('components.icons.trash')
                                 </button>

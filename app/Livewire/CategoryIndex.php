@@ -55,8 +55,6 @@ class CategoryIndex extends Component
     public function editCategory($id)
     {
 
-        logger("Editing category with ID: $id");
-
         $category = Category::findOrFail($id);
 
         // Enter edit mode and populate the form fields for editing
