@@ -53,6 +53,14 @@ class BrandIndex extends Component
         $this->brand_name = $brand->brand_name;
     }
 
+
+    public function resetForm()
+    {
+        $this->editMode = false;
+        $this->selectedBrandId = null;
+        $this->brand_name = null;
+    }
+
     public function deleteBrand($id)
     {
         Brand::findOrFail($id)->delete();
@@ -61,10 +69,5 @@ class BrandIndex extends Component
         return redirect()->route('brand.index');
     }
 
-    protected function resetForm()
-    {
-        $this->editMode = false;
-        $this->selectedBrandId = null;
-        $this->brand_name = null;
-    }
+    
 }

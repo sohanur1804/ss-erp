@@ -34,7 +34,7 @@
               <a class="rounded bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500  py-2 px-4 block text-nowrap text-xs" href="{{ route('brand.index') }}">Brand</a>
             </li>
             <li>
-              <a class="rounded bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500  py-2 px-4 block text-nowrap text-xs" href="#">Warranty</a>
+              <a class="rounded bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500  py-2 px-4 block text-nowrap text-xs" href="{{ route('warranty.index') }}">Warranty</a>
             </li>
             <li>
               <a class="rounded bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 py-2 px-4 block text-nowrap text-xs"

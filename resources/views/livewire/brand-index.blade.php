@@ -10,13 +10,13 @@
             'required' => 'required',
         ])
 
-<button type="submit" class="ss-btn">Add</button>
+        <button type="submit" class="ss-btn">Add</button>   
     </form>
 
     <!-- Brands List Section -->
     <table class="w-full table-auto mt-10">
         <tr>
-            <th class="border px-4 py-2 text-center">Serial</th>
+            <th class="border px-4 py-2 text-center">Serial No.</th>
             <th class="border px-4 py-2 text-center">Brand Name</th>
             <th class="border px-4 py-2">Actions</th>
         </tr>
