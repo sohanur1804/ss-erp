@@ -52,4 +52,7 @@
         @endforeach
     </table>
 
+    <div class="mt-4">
+        {{$warranties->links()}}
+    </div>
 </div>

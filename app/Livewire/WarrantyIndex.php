@@ -12,11 +12,12 @@ class WarrantyIndex extends Component
     public $editMode = false;
     public $selectedWarrantyId;
     protected $rules = [
-        'warranty_duration' =>'required',
+        'warranty_duration' => 'required',
+        // 'warranty_duration' => 'required|unique:warranties,warranty_duration',
     ];
     public function render()
     {
-        $warranties = Warranty::all();
+        $warranties = Warranty::paginate(10);
         return view('livewire.warranty-index', [
             'warranties' => $warranties,
         ]);
@@ -24,6 +25,15 @@ class WarrantyIndex extends Component
 
     public function formSubmit() {
         $this->validate();
+
+        $existingWarranty = Warranty::where('warranty_duration', $this->warranty_duration)->first();
+
+        if ($existingWarranty) {
+        flash()->addError('Warranty with this duration already exists.');
+        $this->resetForm(); 
+        return redirect()->route('warranty.index');
+        }
+
         if ($this->editMode) {
             Warranty::findOrFail($this->selectedWarrantyId)->update([
                 'warranty_duration' => $this->warranty_duration,

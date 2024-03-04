@@ -13,6 +13,8 @@ class BrandIndex extends Component
     protected $rules = [
         'brand_name' => 'required',
     ];
+
+    
     public function render()
     {
         $brands = Brand::all();
@@ -23,7 +25,17 @@ class BrandIndex extends Component
 
     public function formSubmit()
     {
+
+        
         $this->validate();
+
+        $existingBrand = Brand::where('brand_name', $this->brand_name)->first();
+
+        if ($existingBrand) {
+            flash()->addError('Brand with this name already exists.');
+            $this->resetForm();
+            return redirect()->route('brand.index');
+        }
 
         if ($this->editMode) {
             Brand::findOrFail($this->selectedBrandId)->update([

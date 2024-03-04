@@ -21,3 +21,10 @@
 .dropdown:hover > .dropdown-content {
     display: block;
   }
+
+  /* Add these styles to your CSS file */
+.category-suggestions {
+    max-height: 150px; /* Adjust height as needed */
+    overflow-y: auto;
+    /*border: 1px solid #ccc;  Optional: Add border for better visualization */
+}

@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('warranties', function (Blueprint $table) {
             $table->id();
-            $table->text('warranty_duration');
+            $table->string('warranty_duration')->unique();
             $table->timestamps();
+            
         });
     }
 

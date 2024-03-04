@@ -5,7 +5,7 @@
         <select wire:model="classification">
             <option selected>Select</option>
             <option value="brand">Brand</option>
-            <option value="group">Group</option>
+            <option value="Category">Category</option>
         </select>
 
         @include('components.form-field', [
