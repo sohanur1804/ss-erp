@@ -4,6 +4,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Warranty;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Category;
@@ -18,6 +19,7 @@ class ProductIndex extends Component
     public $brands;
     public $description;
     public $warranty;
+    public $warranties;
     public $brand;
     public $editMode = false;
     public $selectedProductId;
@@ -26,8 +28,8 @@ class ProductIndex extends Component
         'name' => 'required',
         'category' => 'required|exists:categories,category_name',
         'description' => 'required',
-        'warranty' => 'required',
-        'brand' => 'required|exists:brands,brand_name',
+        'warranty' => 'required|exists:brands,brand_name',
+        'brand' => 'required|exists:warranties,warranty_duration',
     ];
 
     public function mount()
@@ -35,6 +37,7 @@ class ProductIndex extends Component
         // Fetch categories from the database
         $this->categories = Category::pluck('category_name');
         $this->brands = Brand::pluck('brand_name');
+        $this->warranties = Warranty::pluck('warranty_duration');
     }
 
     public function render()
@@ -46,45 +49,62 @@ class ProductIndex extends Component
     }
 
     public function formSubmit()
-    {
-        $validator = Validator::make(['category' => $this->category, 'brand' => $this->brand], [
-            'category' => 'required|exists:categories,category_name',
-            'brand' => 'required|exists:brands,brand_name',
+{
+    // Check if the product name already exists
+    $existingProduct = Product::where('name', strtoupper($this->name))->first();
+    if ($existingProduct) {
+        flash()->addError('Product name already exists.');
+        return;
+    }
+
+    // Validate the input fields
+    $validator = Validator::make([
+        'category' => $this->category, 
+        'brand' => $this->brand,
+        'warranty' => $this->warranty,
+    ], [
+        'category' => 'required|exists:categories,category_name',
+        'brand' => 'required|exists:brands,brand_name',
+        'warranty' => 'required|exists:warranties,warranty_duration',
+    ]);
+
+    if ($validator->fails()) {
+        flash()->addError('Invalid category name or brand. Please choose from the existing suggestions.');
+        return;
+    }
+
+    // If edit mode is enabled, update the existing product
+    if ($this->editMode) {
+        $product = Product::findOrFail($this->selectedProductId);
+        $product->update([
+            'name' => strtoupper($this->name),
+            'category' => $this->category,
+            'description' => $this->description,
+            'warranty' => $this->warranty,
+            'brand' => $this->brand,
         ]);
 
-        if ($validator->fails()) {
-            flash()->addError('Invalid category name. Please choose from the existing suggestions.');
-            return;
-        }
+        flash()->addSuccess('Product updated successfully.');
+    } else {
+        // If adding a new product, create a new record
+        Product::create([
+            'name' => strtoupper($this->name),
+            'category' => $this->category,
+            'description' => $this->description,
+            'warranty' => $this->warranty,
+            'brand' => $this->brand,
+        ]);
 
-        $this->validate();
-
-        if ($this->editMode) {
-            $product = Product::findOrFail($this->selectedProductId);
-            $product->update([
-                'name' => $this->name,
-                'category' => $this->category,
-                'description' => $this->description,
-                'warranty' => $this->warranty,
-                'brand' => $this->brand,
-            ]);
-
-            session()->flash('success', 'Product updated successfully.');
-        } else {
-            Product::create([
-                'name' => $this->name,
-                'category' => $this->category,
-                'description' => $this->description,
-                'warranty' => $this->warranty,
-                'brand' => $this->brand,
-            ]);
-
-            flash()->addSuccess("Product Created Sucessfully");
-        }
-
-        // $this->resetForm();
-        return redirect()->route('product.index');
+        flash()->addSuccess('Product created successfully.');
     }
+
+    // Reset the form fields
+    $this->resetForm();
+
+    // Redirect to the product index page
+    return redirect()->route('product.index');
+}
+
 
     public function editProduct($id)
     {
@@ -92,11 +112,11 @@ class ProductIndex extends Component
 
         $this->editMode = true;
         $this->selectedProductId = $product->id;
-        $this->name = $product->name;
+        $this->name = strtoupper($product->name);
         $this->category = $product->category;
         $this->description = $product->description;
-        $this->warranty = $product->warranty;
-        $this->brand = $product->brand;
+        $this->warranty = strtoupper($product->warranty);
+        $this->brand = strtoupper($product->brand);
     }
 
     public function resetForm()
@@ -115,6 +135,6 @@ class ProductIndex extends Component
         $product = Product::findOrFail($id);
         $product->delete();
 
-        session()->flash('success', 'Product deleted successfully.');
+        flash()->addSuccess('Product deleted successfully');
     }
 }

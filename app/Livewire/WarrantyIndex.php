@@ -12,8 +12,8 @@ class WarrantyIndex extends Component
     public $editMode = false;
     public $selectedWarrantyId;
     protected $rules = [
-        'warranty_duration' => 'required',
-        // 'warranty_duration' => 'required|unique:warranties,warranty_duration',
+        //'warranty_duration' => 'required',
+        'warranty_duration' => 'required|unique:warranties,warranty_duration',
     ];
     public function render()
     {
@@ -24,9 +24,10 @@ class WarrantyIndex extends Component
     }
 
     public function formSubmit() {
+
         $this->validate();
 
-        $existingWarranty = Warranty::where('warranty_duration', $this->warranty_duration)->first();
+        $existingWarranty = Warranty::where('warranty_duration', strtoupper($this->warranty_duration))->first();
 
         if ($existingWarranty) {
         flash()->addError('Warranty with this duration already exists.');
@@ -36,13 +37,13 @@ class WarrantyIndex extends Component
 
         if ($this->editMode) {
             Warranty::findOrFail($this->selectedWarrantyId)->update([
-                'warranty_duration' => $this->warranty_duration,
+                'warranty_duration' => strtoupper($this->warranty_duration),
             ]);
 
             flash()->addSuccess('Warranty Updated Successfully');
         } else {
             Warranty::create([
-                'warranty_duration' => $this->warranty_duration,
+                'warranty_duration' => strtoupper($this->warranty_duration),
             ]);
 
             flash()->addSuccess('Warranty Created Successfully');

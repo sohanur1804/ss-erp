@@ -42,10 +42,23 @@
             </li> 
           </ul>
         </li>
-        <li>
-          <a class="rounded bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 py-2 px-4 block whitespace-no-wrap text-xs "
-            href="#">Traders Information</a>
+        <li class="dropdown relative bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500">
+          <a class="rounded    py-2 px-4 text-nowrap text-xs flex" href="#">Traders Information <svg
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3 ml-2 mt-1">
+              <path fill-rule="evenodd"
+                d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z"
+                clip-rule="evenodd" />
+            </svg>
+          </a>
+          <ul class="dropdown-content absolute hidden top-0 left-full mt-1 ">
+            <li>
+              <a class="rounded bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-black py-2 px-4 block text-nowrap text-xs"
+                href="{{ route('trader.index') }}">Credit Customer</a>
+            </li>
+            
+          </ul>
         </li>
+        
       </ul>
     </div>
   

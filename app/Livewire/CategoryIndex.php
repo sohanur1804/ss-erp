@@ -29,18 +29,26 @@ class CategoryIndex extends Component
     {
         $this->validate();
 
+        $existingCategory = Category::where('category_name', strtoupper($this->category_name))->first();
+
+        if ($existingCategory) {
+            flash()->addError('Category with this name already exists.');
+            $this->resetForm();
+            return redirect()->route('category.index');
+        }
+
         if ($this->editMode) {
             $category = Category::findOrFail($this->selectedCategoryId);
             $category->update([
                 'classification' => $this->classification,
-                'category_name' => $this->category_name,
+                'category_name' => strtoupper($this->category_name),
             ]);
 
             flash()->addSuccess('Category Updated Successfully');
         } else {
             Category::create([
                 'classification' => $this->classification,
-                'category_name' => $this->category_name,
+                'category_name' => strtoupper($this->category_name),
             ]);
 
             flash()->addSuccess('Category Created Successfully');
@@ -61,7 +69,7 @@ class CategoryIndex extends Component
         $this->editMode = true;
         $this->selectedCategoryId = $category->id;
         $this->classification = $category->classification;
-        $this->category_name = $category->category_name;
+        $this->category_name = strtoupper($category->category_name);
     }
 
     public function resetForm()

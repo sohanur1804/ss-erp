@@ -29,7 +29,7 @@ class BrandIndex extends Component
         
         $this->validate();
 
-        $existingBrand = Brand::where('brand_name', $this->brand_name)->first();
+        $existingBrand = Brand::where('brand_name', strtoupper($this->brand_name))->first();
 
         if ($existingBrand) {
             flash()->addError('Brand with this name already exists.');
@@ -39,13 +39,13 @@ class BrandIndex extends Component
 
         if ($this->editMode) {
             Brand::findOrFail($this->selectedBrandId)->update([
-                'brand_name' => $this->brand_name,
+                'brand_name' => strtoupper($this->brand_name),
             ]);
 
             flash()->addSuccess('Brand Updated Successfully');
         } else {
             Brand::create([
-                'brand_name' => $this->brand_name,
+                'brand_name' => strtoupper($this->brand_name),
             ]);
 
             flash()->addSuccess('Brand Created Successfully');
@@ -62,7 +62,7 @@ class BrandIndex extends Component
 
         $this->editMode = true;
         $this->selectedBrandId = $brand->id;
-        $this->brand_name = $brand->brand_name;
+        $this->brand_name = strtoupper($brand->brand_name);
     }
 
 
