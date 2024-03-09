@@ -73,6 +73,10 @@ class ProductIndex extends Component
         return;
     }
 
+    $category = Category::where('category_name', $this->category)->first();
+    $warranty = Warranty::where('warranty_duration', $this->warranty)->first();
+    $brand = Brand::where('brand_name', $this->brand)->first();
+
     // If edit mode is enabled, update the existing product
     if ($this->editMode) {
         $product = Product::findOrFail($this->selectedProductId);
@@ -89,10 +93,10 @@ class ProductIndex extends Component
         // If adding a new product, create a new record
         Product::create([
             'name' => strtoupper($this->name),
-            'category' => $this->category,
+            'category_id' => $category->id,
             'description' => $this->description,
-            'warranty' => $this->warranty,
-            'brand' => $this->brand,
+            'warranty_id' => $warranty->id,
+            'brand_id' => $brand->id,
         ]);
 
         flash()->addSuccess('Product created successfully.');

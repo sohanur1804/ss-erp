@@ -77,21 +77,21 @@
                 @if($editMode && $selectedProductId === $product->id)
                 <input wire:model="category" type="text" placeholder="Category" required>
                 @else
-                {{ $product->category }}
+                {{ $product->category->category_name  }}
                 @endif
             </td>
             <td class="border px-4 py-2">
                 @if($editMode && $selectedProductId === $product->id)
                 <input wire:model="brand" type="text" placeholder="Brand" required>
                 @else
-                {{ $product->brand }}
+                {{ $product->brand->brand_name }}
                 @endif
             </td>
             <td class="border px-4 py-2">
                 @if($editMode && $selectedProductId === $product->id)
                 <input wire:model="warranty" type="text" placeholder="Warranty" required>
                 @else
-                {{ $product->warranty }}
+                {{ $product->warranty->warranty_duration }}
                 @endif
             </td>
             <td class="border px-4 py-2">
@@ -108,7 +108,7 @@
                     <button wire:click.prevent="resetForm">Cancel</button>
                     @else
                     <button wire:click.prevent="editProduct({{ $product->id }})">Edit</button>
-                    <button wire:click.prevent="deleteProduct({{ $product->id }})" onclick="return confirm('Are you sure?')">Delete</button>
+                    <button wire:click.prevent="deleteProduct({{ $product->id }})" onclick="return confirm('Are you sure?')>Delete</button>
                     @endif
                 </div>
             </td>

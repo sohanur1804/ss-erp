@@ -11,4 +11,9 @@ class Warranty extends Model
     protected $fillable = [
         'warranty_duration',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
