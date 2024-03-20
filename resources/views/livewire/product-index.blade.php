@@ -2,15 +2,10 @@
     <form wire:submit.prevent="formSubmit" class="flex flex-wrap">
         @csrf
 
-        <div class="flex items-center mr-4">
-            <label for="name" class="mr-2">Product Name:</label>
-            <input wire:model="name" type="text" id="name" placeholder="Product Name or Model" class="rounded">
-            @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
-        </div>
 
         <div class="flex items-center mr-4">
             <label for="category">Category:</label>
-            <input wire:model="category" type="text" id="category" placeholder="Category" autocomplete="off" list="categoryList">
+            <input wire:model="category" type="text" id="category" placeholder="Category" autocomplete="off" list="categoryList" required>
             <datalist id="categoryList">
                 @foreach ($categories as $category)
                 <option value="{{ $category }}">
@@ -21,7 +16,7 @@
 
         <div class="flex items-center mr-4">
             <label for="brand" class="mr-2">Brand:</label>
-            <input wire:model="brand" type="text" id="brand" placeholder="Brand" class="rounded" autocomplete="off" list="brandList">
+            <input wire:model="brand" type="text" id="brand" placeholder="Brand" class="rounded" autocomplete="off" list="brandList" required>
             <datalist id="brandList">
                 @foreach ($brands as $brand)
                 <option value="{{ $brand }}">
@@ -30,9 +25,17 @@
             @error('brand') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
 
+
+       
+        <div class="flex items-center mr-4">
+            <label for="name" class="mr-2">Product Name:</label>
+            <input wire:model="name" type="text" id="name" placeholder="Product Name or Model" class="rounded" required>
+            @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
+        </div> 
+
         <div class="flex items-center">
             <label for="warranty" class="mr-2">Warranty:</label>
-            <input wire:model="warranty" type="text" id="warranty" placeholder="Warranty" class="rounded" autocomplete="off" list="warrantydList">
+            <input wire:model="warranty" type="text" id="warranty" placeholder="Warranty" class="rounded" autocomplete="off" list="warrantydList" required>
             <datalist id="warrantydList">
                 @foreach ($warranties as $warranty)
                 <option value="{{ $warranty }}">
@@ -43,7 +46,7 @@
 
         <div class="flex items-center w-full mt-5">
             <label for="description" class="mr-2">Description:</label>
-            <input wire:model="description" type="text" id="description" placeholder="Description" class="w-full rounded">
+            <input wire:model="description" type="text" id="description" placeholder="Description" class="w-full rounded" required>
             @error('description') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
 
@@ -108,7 +111,7 @@
                     <button wire:click.prevent="resetForm">Cancel</button>
                     @else
                     <button wire:click.prevent="editProduct({{ $product->id }})">Edit</button>
-                    <button wire:click.prevent="deleteProduct({{ $product->id }})" onclick="return confirm('Are you sure?')>Delete</button>
+                    <button wire:click.prevent="deleteProduct({{ $product->id }})" onclick="return confirm('Are you sure?')">Delete</button>
                     @endif
                 </div>
             </td>

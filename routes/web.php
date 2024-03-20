@@ -38,7 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('brand', BrandController::class);
     Route::resource('warranty', WarrantyController::class);
     Route::resource('trader', TraderController::class);
-    Route::resource('purchase', PurchaseController::class)->names('purchase');
+    Route::resource('purchase', PurchaseController::class);
+    Route::get('/get-category-name', [PurchaseController::class, 'getCategoryName'])->name('getCategoryName');
 });
 
 

@@ -19,4 +19,8 @@ class Trader extends Model
         'opening_balance',
 
     ];
+
+    public function purchase() {
+        return $this->hasMany(Purchase::class);
+    }
 }

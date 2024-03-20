@@ -28,8 +28,8 @@ class ProductIndex extends Component
         'name' => 'required',
         'category' => 'required|exists:categories,category_name',
         'description' => 'required',
-        'warranty' => 'required|exists:brands,brand_name',
-        'brand' => 'required|exists:warranties,warranty_duration',
+        'brand' => 'required|exists:brands,brand_name',
+        'warranty' => 'required|exists:warranties,warranty_duration',
     ];
 
     public function mount()

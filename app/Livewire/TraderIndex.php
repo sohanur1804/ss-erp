@@ -29,6 +29,12 @@ class TraderIndex extends Component
         'owner' => 'nullable',
         'opening_balance' => 'nullable|numeric',
     ];
+
+    public function mount() {
+        $this->opening_balance = 0;
+    }
+
+    
     public function render()
     {
         $traders = Trader::all();
